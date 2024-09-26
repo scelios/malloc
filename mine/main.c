@@ -19,30 +19,41 @@ void	*ft_memset(void *b, int c, size_t len)
 
 void	*start_malloc(size_t size)
 {
-	t_heap	*heap;
-	t_block	*block;
-	void	*res = NULL;
+	t_heap	*heap = NULL;
+	t_block	*block = NULL;
+
 
 	if (!size)
 		return (NULL);
-	size = (size + 15) & ~15;
-	printf("start_malloc\n");
-	if((block = find_block(size)) != NULL)
+	//printf("start_malloc %d\n",size);
+	
+	// size += sizeof(t_block) + sizeof(t_heap);
+	size = (size + 15) & ~15 ;
+	//printf("start_malloc %d\n",size);
+	findBlock(size, &heap, &block);
+	if( block != NULL)
 	{
-		return (block);
+		divideBlock(size,heap, block);
 	}
 	else
-		return create_heap(size);
-	printf("End malloc\n");
+	{
+		//printf("Block not found\n");
+		createHeap(size,&heap, &block);
+		//printf("Heap %p\n", (void *)heap);
 
-	return (res);
+		if (heap == NULL)
+			return (NULL);
+		divideBlock(size,heap, block);
+	}
+	//printf("End malloc\n");
+	return (BLOCK_SHIFT(block));
 }
 
 void	*alloc(size_t size)
 {
 	void *res;
 	// pthread_mutex_lock(&g_ft_malloc_mutex);
-	printf("malloc\n");
+
 	if ((res = start_malloc(size)))
 		ft_memset(res, 0xaa, size);
 	// pthread_mutex_unlock(&g_ft_malloc_mutex);
@@ -61,23 +72,37 @@ void fctn(char *test, char *p)
 	test[i] = '\0';
 
 }
+
 int main()
 {
-	int length = 50;
+	int length = 1900;
+	//printf("%d %d\n", sizeof(t_heap), sizeof(t_block));
+	// int i = -1;
+	// char *testi[1000];
+	// while (++i < 1000)
+	// {
+	// 	testi[i] = alloc(length);
+	// }
 	char *test = alloc(length);
-	printf("\n\n");
+	//printf("\n\n");
 
 	char *test2 = alloc(length);
-	char *test3 = alloc(length);
+	char *test3 = alloc(148);
+
+	// char *test3 = alloc(length);
 	// char *test4;
-	printf("\n\n");
+	//printf("\n\n");
 	fctn(test, "abcdef");
 	fctn(test2, "1234567890");
-	fctn(test3, "ghijkl");
+	// fctn(test3, "ghijkl");
 	// fctn(test4, "ghijkl");
 
-	printf("test: %s\n", test);
-	printf("test2: %s\n", test2);
+	printf("test: %s %p\n", test, (void *)test);
+
+	printf("test2: %s %p\n", test2, (void *)test2);
+
+	//printf("adress %p\n", (void *)test2 - (void *)test  - sizeof(t_block) );
+	// printf("test3: %s %p\n", test3, (void *)test3);
 	// printf("test3: %s\n", test3);
 
 	// printf("test4: %s\n", test4);

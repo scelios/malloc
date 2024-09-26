@@ -94,11 +94,12 @@ void			show_alloc_mem_hex(void);
 
 void	*ft_memset(void *b, int c, size_t len);
 void	*start_malloc(size_t size);
-t_block *create_heap(size_t size);
-t_heap *last_heap(t_heap *heap);
-t_block	*find_block(size_t size);
-t_block *cut_block_from_heap(t_heap *heap, t_block *block, size_t size);
-t_heap_group get_group(size_t size);
+void createHeap(size_t size,t_heap **heap, t_block **block);
+t_heap *lastHeap(t_heap *heap);
+void findBlock(size_t size,t_heap **heap, t_block **block);
+void divideBlock(size_t size,t_heap *heap, t_block *block);
+
+t_heap_group getGroup(size_t size);
 size_t get_heap_size_from_block_size(size_t size);
 
 #endif

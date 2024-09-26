@@ -14,10 +14,12 @@ FLAGS    :=
 #                                 PROGRAM'S SRCS                               #
 ################################################################################
 
-SRCS        :=      main.c \
+SRCS        :=      shared.c \
                           findBlock.c \
+                          divide.c \
                           createHeap.c \
-                          shared.c \
+                          helper.c \
+                          main.c \
                           
 OBJS        := $(SRCS:.c=.o)
 
