@@ -40,3 +40,28 @@ t_heap_group getGroup(size_t size)
 		return (SMALL);
 	return (LARGE);
 }
+
+void searchPtr(void *ptr, t_heap **heap, t_block **block)
+{
+	t_heap *tmpHeap;
+	t_block *tmpBlock;
+
+	tmpHeap = g_heap_anchor;
+	while (tmpHeap)
+	{
+		tmpBlock = HEAP_SHIFT(tmpHeap);
+		while (tmpBlock)
+		{
+			if (BLOCK_SHIFT(tmpBlock) == ptr)
+			{
+				*heap = tmpHeap;
+				*block = tmpBlock;
+				return ;
+			}
+			tmpBlock = tmpBlock->next;
+		}
+		tmpHeap = tmpHeap->next;
+	}
+	*heap = NULL;
+	*block = NULL;
+}

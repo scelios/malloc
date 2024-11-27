@@ -12,15 +12,39 @@ CC        := gcc
 FLAGS    := 
 ################################################################################
 #                                 PROGRAM'S SRCS                               #
-################################################################################
+###############################################################################
 
 SRCS        :=      shared.c \
                           findBlock.c \
                           divide.c \
                           createHeap.c \
                           helper.c \
-                          main.c \
-                          
+                          malloc.c \
+						  log.c \
+						  free.c \
+						  realloc.c \
+						  calloc.c \
+						  reallocf.c \
+							libc/ft_itoa_base.c \
+							libc/ft_bzero.c \
+							libc/ft_putstr.c \
+							libc/ft_putchar_fd.c\
+							libc/ft_memcpy.c \
+							libc/ft_memmove.c\
+							libc/ft_memset.c\
+							libc/ft_putstr_fd.c \
+							printf/ft_printf.c \
+							printf/ft_putchar_printf.c \
+							printf/ft_putnbr_base_printf.c \
+							printf/ft_putnbr_printf.c \
+							printf/ft_putstr_printf.c \
+							src/main.c \
+							src/print.c \
+							src/test_limit.c \
+							src/test_malloc.c \
+							src/test_mixed.c \
+							src/test_realloc.c
+
 OBJS        := $(SRCS:.c=.o)
 
 .c.o:

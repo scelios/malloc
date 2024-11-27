@@ -1,13 +1,14 @@
 #ifndef MALLOC_H
 # define MALLOC_H
 
+#include "./printf/ft_printf.h"
 # include <fcntl.h>
 # include <pthread.h>
-# include <stdlib.h>
+
 # include <stdio.h>
 # include <sys/mman.h>
 # include <sys/resource.h>
-# include <unistd.h>
+// # include <unistd.h>
 
 # define HEAP_SHIFT(start) ((void *)start + sizeof(t_heap))
 # define BLOCK_SHIFT(start) ((void *)start + sizeof(t_block))
@@ -90,7 +91,14 @@ void			*realloc(void *ptr, size_t size);
 void			*reallocf(void *ptr, size_t size);
 void			free(void *ptr);
 void			show_alloc_mem();
-void			show_alloc_mem_hex(void);
+void loga(void);
+void checkPrevNext();
+void	start_free(void *ptr);
+void	*start_malloc(size_t size);
+void*start_realloc(void *ptr, size_t size);
+
+
+
 
 void	*ft_memset(void *b, int c, size_t len);
 void	*start_malloc(size_t size);
@@ -101,5 +109,18 @@ void divideBlock(size_t size,t_heap *heap, t_block *block);
 
 t_heap_group getGroup(size_t size);
 size_t get_heap_size_from_block_size(size_t size);
+void searchPtr(void *ptr, t_heap **heap, t_block **block);
 
+void show_alloc_mem();
+
+void			ft_bzero(void *s, size_t n);
+void			ft_putstr(char const *s);
+void			*ft_memmove(void *dst, const void *src, size_t len);
+void			*ft_memcpy(void *dst, const void *src, size_t n);
+void			ft_itoa_base(size_t nb, char base, char length, t_bool prefix);
+void			ft_itoa_fd(size_t nb, char base, int fd, t_bool prefix);
+size_t			ft_strlen(const char *s);
+void			*ft_memset(void *b, int c, size_t len);
+void			ft_putstr_fd(char const *s, int fd);
+void			ft_putchar_fd(char c, int fd);
 #endif

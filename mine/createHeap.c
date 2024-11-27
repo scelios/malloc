@@ -16,24 +16,22 @@ void createHeap(size_t size,t_heap **heap, t_block **block)
 	size_t heapSize;
 	t_heap_group group;
 
-	printf("create Heap\n");
 	group = getGroup(size);
-	group = TINY;
+
 	heapSize = get_heap_size_from_block_size(size);
-	heapSize = 4096;
-	//!
+
+
 	if (get_system_limit() < heapSize)
 	{
-		heap = NULL;
-		block = NULL;
+		*heap = NULL;
+		*block = NULL;
 		return ;
 	}
 	newHeap = (t_heap *)mmap(0, heapSize, PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0);
 	if (newHeap == MAP_FAILED)
 	{
-		//printf("Failed to create heap\n");
-		heap = NULL;
-		block = NULL;
+		*heap = NULL;
+		*block = NULL;
 		return ;
 	}
 	newHeap->group = group;
@@ -53,6 +51,4 @@ void createHeap(size_t size,t_heap **heap, t_block **block)
 	newBlock->prev = NULL;
 	*heap = newHeap;
 	*block = newBlock;
-	//printf("Size block %ld\n", newBlock->data_size);
-	//printf("End create Heap %p %p %p\n", (void *)*heap,(void *)*block, BLOCK_SHIFT(*block));
 }
