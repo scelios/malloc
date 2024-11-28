@@ -1,20 +1,17 @@
-#  |  |  ___ \    \  |         |
-#  |  |     ) |  |\/ |   _  |  |  /   _ 
-# ___ __|  __/   |   |  (   |    <    __/ 
-#    _|  _____| _|  _| \__,_| _|\_\ \___|
-#                              by jcluzet
-################################################################################
-#                                     CONFIG                                   #
-################################################################################
+ifeq ($(HOSTTYPE),)
+	HOSTTYPE := $(shell uname -m)_$(shell uname -s)
+endif
 
-NAME        := a.out
-CC        := gcc
-FLAGS    := 
-################################################################################
-#                                 PROGRAM'S SRCS                               #
-###############################################################################
+# **************************************************************************** #
+# FILES             														   #
+# **************************************************************************** #
 
-SRCS        :=      shared.c \
+PATH_INC = .
+PATH_LIB = .
+PATH_OBJ = obj
+PATH_SRC = .
+
+SOURCES += shared.c \
                           findBlock.c \
                           divide.c \
                           createHeap.c \
@@ -38,50 +35,46 @@ SRCS        :=      shared.c \
 							printf/ft_putnbr_base_printf.c \
 							printf/ft_putnbr_printf.c \
 							printf/ft_putstr_printf.c \
-							src/main.c \
-							src/print.c \
-							src/test_limit.c \
-							src/test_malloc.c \
-							src/test_mixed.c \
-							src/test_realloc.c
-
-OBJS        := $(SRCS:.c=.o)
-
-.c.o:
-	${CC} ${FLAGS} -c $< -o ${<:.c=.o}
-
-################################################################################
-#                                  Makefile  objs                              #
-################################################################################
 
 
-CLR_RMV		:= \033[0m
-RED		    := \033[1;31m
-GREEN		:= \033[1;32m
-YELLOW		:= \033[1;33m
-BLUE		:= \033[1;34m
-CYAN 		:= \033[1;36m
-RM		    := rm -f
+OBJECTS = $(SOURCES:%.c=$(PATH_OBJ)/%.o)
 
-${NAME}:	${OBJS}
-			@echo "$(GREEN)Compilation ${CLR_RMV}of ${YELLOW}$(NAME) ${CLR_RMV}..."
-			${CC} ${FLAGS} -o ${NAME} ${OBJS}
-			@echo "$(GREEN)$(NAME) created[0m ✔️"
+# **************************************************************************** #
+# VARIABLES         														   #
+# **************************************************************************** #
 
-all:		${NAME}
+NAME = libft_malloc_$(HOSTTYPE).so
+LIB_NAME = libft_malloc.so
 
-bonus:		all
+CC = gcc
+
+FLAGS_CC = -Wall -Wextra -Werror -fPIC
+FLAGS_LIB = -shared
+
+# **************************************************************************** #
+# COMMANDS  		    													   #
+# **************************************************************************** #
+
+.PHONY: all clean fclean re
+
+all: $(NAME)
+
+$(NAME): $(OBJECTS)
+	$(CC) $(FLAGS_LIB) -o $@ $(OBJECTS)
+	@rm -f $(LIB_NAME)
+	ln -s $(NAME) $(LIB_NAME)
+	@echo "Make done"
+
+$(PATH_OBJ)/%.o: $(PATH_SRC)/%.c
+	@mkdir -p $(@D)
+	$(CC) -c -o $@ $(FLAGS_CC) $^ -O0 -g -I $(PATH_INC)
 
 clean:
-			@ ${RM} *.o */*.o */*/*.o
-			@ echo "$(RED)Deleting $(CYAN)$(NAME) $(CLR_RMV)objs ✔️"
+	@rm -rf $(PATH_OBJ)
+	@echo "Clean done"
 
-fclean:		clean
-			@ ${RM} ${NAME}
-			@ echo "$(RED)Deleting $(CYAN)$(NAME) $(CLR_RMV)binary ✔️"
+fclean: clean
+	@rm -f $(NAME) $(LIB_NAME)
+	@echo "Fclean done"
 
-re:			fclean all
-
-.PHONY:		all clean fclean re
-
-
+re: fclean $(NAME)

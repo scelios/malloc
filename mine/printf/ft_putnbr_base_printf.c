@@ -43,14 +43,10 @@ static int	ft_base(unsigned long long nb, char *base, int j)
 	len = ft_verif_base(base);
 	if (len == 1 || !len)
 		return (0);
-	if (nb < 0)
-	{
-		nb = -nb;
-		j += write(1, "-", 1);
-	}
-	if (nb < len)
+
+	if ((long long)nb < len)
 		j += ft_putchar_printf(base[nb]);
-	if (nb >= len)
+	if ((long long)nb >= len)
 	{
 		j += ft_base(nb / len, base, 0);
 		j += ft_base(nb % len, base, 0);

@@ -57,7 +57,6 @@ long showBloc(t_heap *heap)
 void start_show_alloc_mem()
 {
 	t_heap *heap = g_heap_anchor;
-	t_block *block;
 	long total = 0;
 	while (heap)
 	{
