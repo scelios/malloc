@@ -1,24 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   realloc.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jterrazz <jterrazz@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/19 17:44:52 by jterrazz          #+#    #+#             */
-/*   Updated: 2019/07/22 11:38:13 by jterrazz         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "malloc.h"
-
-/*
-** The realloc() function changes the size of the memory block pointed to
-** by ptr to size bytes. The contents will be unchanged in the range from
-** the start of the region up to the minimum of the old and new sizes.
-** I decided to use the linux implementation for realloc(ptr, 0), it free the
-** ptr and returns NULL
-*/
 
 void*start_realloc(void *ptr, size_t size)
 {
