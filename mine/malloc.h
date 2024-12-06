@@ -42,22 +42,6 @@ typedef enum	e_stack_event {
 	DEALLOCATE
 }				t_stack_event;
 
-typedef enum	e_detail_event {
-	MALLOC,
-	CALLOC,
-	FREE,
-	REALLOC,
-	REALLOCF,
-	HEAP_CREATE,
-	HEAP_DELETE
-}				t_detail_event;
-
-typedef enum	e_env {
-	ENV_STACK_LOGGING = 1 << 0,
-	ENV_FULL_LOGGING = 1 << 1,
-	ENV_SCRIBBLE = 1 << 2
-}				t_env;
-
 typedef struct	s_heap {
 	struct s_heap	*prev;
 	struct s_heap	*next;
@@ -70,10 +54,6 @@ typedef struct	s_heap {
 extern pthread_mutex_t		g_ft_malloc_mutex;
 extern t_heap				*g_heap_anchor;
 
-/*
-** A block stores data for each malloc call
-*/
-
 typedef struct	s_block {
 	struct s_block	*prev;
 	struct s_block	*next;
@@ -81,9 +61,6 @@ typedef struct	s_block {
 	t_bool			freed;
 }				t_block;
 
-/*
-** Library methods
-*/
 
 void			*malloc(size_t size);
 void			*calloc(size_t count, size_t size);
