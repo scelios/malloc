@@ -36,6 +36,7 @@ static int	ft_verif_base(char *b)
 	return (i);
 }
 
+
 static int	ft_base(unsigned long long nb, char *base, int j)
 {
 	int	len;

@@ -21,7 +21,6 @@ SOURCES += shared.c \
 						  free.c \
 						  realloc.c \
 						  calloc.c \
-						  reallocf.c \
 							libc/ft_itoa_base.c \
 							libc/ft_bzero.c \
 							libc/ft_putstr.c \
